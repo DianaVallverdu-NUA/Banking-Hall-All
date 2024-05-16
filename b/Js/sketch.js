@@ -26,10 +26,9 @@ const swirlFactor = 0.20;
 function setup() {
     // Using the window width and height to create the canvas so it is full screen
   createCanvas(innerWidth,innerHeight);
-  WebMidi
-        .enable()
-        .then(onEnabled)
-        .catch(err => alert(err));
+  
+  setupController();
+  
   for (let i = 0; i < num; i++) {
     particles.push({
         // Initialising the particle position vector with random x and y coordinates within the canvas
@@ -52,39 +51,8 @@ function setup() {
   // sliderData[6] = 0.1;
   // sliderData[7] = 0.9;
 }
-// gets called by MIDI library once MIDI enabled
-function onEnabled() {
-  // Display available MIDI input devices
-  if (WebMidi.inputs.length < 1) {
-      console.log("No device detected.");
-  } else {
-      WebMidi.inputs.forEach((device, index) => {
-          console.log(`${index}: ${device.name}`);
-      });
-  }
-  myController = WebMidi.inputs[0];
-  myController.channels[1].addListener("noteon", noteOn);
-  myController.channels[1].addListener("controlchange", allCC);
-
-}
-// gets called when a MIDI note its intercepted 
-function noteOn(e) {
-  // for APC Mini
-  // console.log(e.note.name, e.note.accidental || null, e.note.octave);
-  // calculate the postion of the note in the grid of notes
-  let pos = returnXY(e.note.name, e.note.accidental || '', e.note.octave);
-  // calculate the x y pixel equivalent 
-  // add offset values to position in the middle of an notional 8 x8 grid cell
-  // width / 16 = half of cell size
-  let hSpace = width / 16;
-  let vSpace = height / 16;
-  let x = pos.x * width + hSpace;
-  let y = pos.y * height + vSpace
-  // TODO - use these values to draw something at the note position?
-  // for example: circle(x, y, 20)
-}
 // gets called when a MIDI control change message is intercepted
-function allCC(e) {
+function customCC(e) {
   // console.log(e.data[2]);
   // calculate slider data as a value  0 to  1
   let ratio = e.data[2] /  127;
