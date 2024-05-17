@@ -1,4 +1,10 @@
 /* generic style */
+
+@font-face {
+  font-family: "killerBoots";
+  src: url(./fonts/killer_boots/KILLERBOOTS.TTF);
+}
+
 * {
   margin: 0;
 }
@@ -12,7 +18,7 @@ body {
   font-style: normal;
 
   font-size: 1.2rem;
-  color: white;
+  color: #FF007F;
 }
 
 canvas {
@@ -26,20 +32,19 @@ canvas {
   z-index: 1;
   top: 0px;
 
-  /* same size as nav bar */
   width: 100%;
   height: 5vh;
+  padding: 15px;
 
   /* font slightly bigger */
-  font-size: 30px;
-  font-family: "Courier New", Courier, monospace;
+  font-size: 4rem;
+  font-family: "killerBoots";
+  color: #FF007F;
 
   /* display flex and aligned */
   display: flex;
   align-items: center;
   justify-content: center;
-
-  background-color: rgba(100, 100, 100, 0.5);
 }
 
 /* info div */
@@ -52,11 +57,11 @@ canvas {
   margin-top: 10vh;
 
   /* width and padding */
-  width: 30vw;
+  width: 50vw;
   padding: 20px;
 
   /* light background color */
-  background-color: rgb(213, 213, 213, 0.4);
+  background-color: rgb(10, 10, 10, 0.4);
 
   /* `z-index */
   z-index: 2;
@@ -82,11 +87,13 @@ button {
   border-radius: 5px;
   box-shadow: 0 0 5px;
   margin: 5px;
+  font-family: "killerBoots";
+  font-size: 2rem;
   cursor: pointer;
-  background-color: grey;
+  background-color: black;
 }
 
 button:hover {
-  background-color: white;
-  color: grey;
+  background-color: #FF007F;
+  color: black;
 }

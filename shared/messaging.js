@@ -4,7 +4,6 @@ const div = document.getElementById("infoDiv");
 function displayMessage() {
   console.log(`>= ${secondsToDisplayMessage} seconds have passed since last interaction`);
 
-  div.style.color = "white";
   div.style.display = "block";
 }
 
