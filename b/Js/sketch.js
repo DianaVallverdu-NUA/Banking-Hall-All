@@ -11,7 +11,7 @@ const CCSLIDER6 = 8;
 const CCSLIDER7 = 9;
 const CCSLIDER8 = 12;
 //const CCSLIDER9 = 12;
-const sliderData = [0,0,0,0,0,0,0,0];
+const sliderData = [0.2,0.2,0.2,0.2,0.2,0.2,0,0.2];
 
 // To store an array of particle objects
 let particles = [];
