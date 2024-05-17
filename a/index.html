@@ -4,23 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Generic MIDI</title>
-    <link href="../shared/styles.css" rel="stylesheet" type="text/css"/>
+    <link href="../shared/styles.css" rel="stylesheet" type="text/css" />
     <script src="../libs/webmidi.iife.min.js"></script>
     <script src="../libs/p5.min.js"></script>
     <script src="../shared/midi.js"></script>
     <script src="js/sketch.js"></script>
     <script src="../shared/messaging.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
   </head>
 
   <body>
     <div id="shape-title">Rings of Creation</div>
 
     <div id="infoDiv">
-      <p>You are seeing group's X work, click to see another group's work:</p>
+      <p>
+        You are seeing Rings of Creation, an interactive project made by
+        Creative Computing Level 5 Students. The participants in this project
+        where Amie Mason, Catherine Linton, Joe Taylor, Ruby Snell and Tiya
+        Patel.
+      </p>
 
-      <button>Group A</button>
-      <button>Group B</button>
-      <button>Group C</button>
+      <p>Explore other work below: </p>
+
+      <div id="buttonsDiv">
+        <a href="../a"><button>Rings of Creation</button></a>
+        <a href="../b"><button>Cosmic Rays</button></a>
+        <a href="../c"><button>The Iris</button></a>
+      </div>
     </div>
   </body>
 </html>

@@ -1,36 +1,17 @@
+/* generic style */
 * {
   margin: 0;
 }
+
 body {
   overflow: hidden;
   background-color: black;
 
-  /* font */
-  font-family: sans-serif;
-  font-size: 20px;
-  color: white;
-}
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 
-#infoDiv {
-  /* position absolute so it's floating on top of figure */
-  position: absolute;
-
-  /* margin for info container */
-  margin-top: 10vh;
-
-  /* width and padding */
-  width: 20vw;
-  height: 20vh;
-  padding: 20px;
-
-  /* light background color */
-  background-color: rgb(213, 213, 213, 0.4);
-
-  /* `z-index */
-  z-index: 2;
-}
-
-p {
+  font-size: 1.2rem;
   color: white;
 }
 
@@ -38,7 +19,7 @@ canvas {
   position: relative;
 }
 
-/* shape title is at middle of top of the screen */
+/* top bar */
 #shape-title {
   /* set at top */
   position: absolute;
@@ -61,13 +42,46 @@ canvas {
   background-color: rgba(100, 100, 100, 0.5);
 }
 
+/* info div */
 
-/* there are some clickable buttons inside the info container */
+#infoDiv {
+  /* position absolute so it's floating on top of figure */
+  position: absolute;
+
+  /* margin for info container */
+  margin-top: 10vh;
+
+  /* width and padding */
+  width: 30vw;
+  padding: 20px;
+
+  /* light background color */
+  background-color: rgb(213, 213, 213, 0.4);
+
+  /* `z-index */
+  z-index: 2;
+}
+
+p {
+  color: white;
+  margin-bottom: 10px;
+}
+
+#buttonsDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  all: unset;
+}
+
 button {
   all: unset;
   padding: 5px;
   border-radius: 5px;
   box-shadow: 0 0 5px;
+  margin: 5px;
   cursor: pointer;
   background-color: grey;
 }
