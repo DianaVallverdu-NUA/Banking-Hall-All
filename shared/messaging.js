@@ -1,53 +1,63 @@
 const secondsToDisplayMessage = 5;
 const div = document.getElementById("infoDiv");
-const forwardArrow = document.getElementById("forwardArrow");
-const backArrow = document.getElementById("backArrow");
+const forwardArrow = document.getElementById("forwardArrowButton");
+const backArrow = document.getElementById("backArrowButton");
+const pages = ["a", "b", "c"];
+let pageIndex;
 
-forwardArrow.onclick = () => {
+function getInitialIndex() {
   const href = window.location.href;
   const currentPage = href[href.length - 2];
 
   switch (currentPage) {
     case "a": {
-      //go to b
+      pageIndex = 0;
       return;
     }
     case "b": {
-      //go to c
+      pageIndex = 1;
       return;
     }
     case "c": {
-      //go to a
+      pageIndex = 2;
       return;
     }
   }
+}
+
+forwardArrow.onclick = () => {
+  //update page index
+  pageIndex++;
+  if (pageIndex >= pages.length) pageIndex = 0;
+
+  //get current page
+  const currentPage = window.location.href;
+
+  //update page value
+  const newPage =
+    currentPage.substring(0, currentPage.length - 2) + pages[pageIndex] + "/";
+
+  //navigate
+  window.location.href = newPage;
 };
 
 backArrow.onclick = () => {
-  const href = window.location.href;
-  const currentPage = href[href.length - 2];
+  //update page index
+  pageIndex--;
+  if (pageIndex < 0) pageIndex = pages.length - 1;
 
-  switch (currentPage) {
-    case "a": {
-      //go to c
-      return;
-    }
-    case "b": {
-      //go to a
-      return;
-    }
-    case "c": {
-      //go to b
-      return;
-    }
-  }
+  //get current page
+  const currentPage = window.location.href;
+
+  //update page value
+  const newPage =
+    currentPage.substring(0, currentPage.length - 2) + pages[pageIndex] + "/";
+
+  //navigate
+  window.location.href = newPage;
 };
 
 function displayMessage() {
-  console.log(
-    `>= ${secondsToDisplayMessage} seconds have passed since last interaction`
-  );
-
   div.classList.remove("dissolve-out");
   div.classList.add("dissolve-in");
 
@@ -61,7 +71,7 @@ function hideMessage() {
 
 function intervalFunction() {
   secondsSinceInteraction++;
-  console.log(secondsSinceInteraction);
 }
 
+getInitialIndex();
 displayMessage();

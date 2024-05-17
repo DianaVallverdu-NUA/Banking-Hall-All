@@ -17,7 +17,6 @@ let pgIris;
 function setupIris() {
   pgIris = createGraphics(windowWidth, windowHeight);
   // create grid
-  console.log(windowWidth)
   cols = floor(windowWidth / scl);
   rows = floor(windowHeight / scl);
 

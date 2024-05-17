@@ -1,3 +1,4 @@
+let first = true;
 let secondsSinceInteraction = 0;
 
 function setupController() {
@@ -10,9 +11,9 @@ function setupController() {
 
 // gets called when a MIDI control change message is intercepted
 function allCC(e) {
-
   if (secondsSinceInteraction >= secondsToDisplayMessage) {
-    displayMessage();
+    if (first) hideMessage();
+    else displayMessage();
   }
 
   secondsSinceInteraction = 0;
