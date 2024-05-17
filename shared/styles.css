@@ -17,8 +17,8 @@ body {
   font-optical-sizing: auto;
   font-style: normal;
 
-  font-size: 1.2rem;
-  color: #FF007F;
+  font-size: 2rem;
+  color: #ff007f;
 }
 
 canvas {
@@ -39,7 +39,7 @@ canvas {
   /* font slightly bigger */
   font-size: 4rem;
   font-family: "killerBoots";
-  color: #FF007F;
+  color: #ff007f;
 
   /* display flex and aligned */
   display: flex;
@@ -54,7 +54,8 @@ canvas {
   position: absolute;
 
   /* margin for info container */
-  margin-top: 10vh;
+  left: 10vh;
+  top: 15vh;
 
   /* width and padding */
   width: 50vw;
@@ -94,6 +95,55 @@ button {
 }
 
 button:hover {
-  background-color: #FF007F;
+  background-color: #ff007f;
   color: black;
+}
+
+@keyframes dissolveIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dissolveOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.dissolve-in {
+  animation: dissolveIn;
+  animation-duration: 10s;
+  animation-fill-mode: forwards;
+}
+
+.dissolve-out {
+  animation: dissolveOut;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.arrow {
+  filter: invert(19%) sepia(85%) saturate(6806%) hue-rotate(321deg) brightness(96%) contrast(113%);
+
+  position: absolute;
+  z-index: 2;
+
+  top: 45vh;
+}
+
+#forwardArrow {
+  left: 96vw;
+}
+
+#backArrow {
+  left: 2vw;
 }

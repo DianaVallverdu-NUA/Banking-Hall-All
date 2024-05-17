@@ -10,8 +10,12 @@ function setupController() {
 
 // gets called when a MIDI control change message is intercepted
 function allCC(e) {
+
+  if (secondsSinceInteraction >= secondsToDisplayMessage) {
+    displayMessage();
+  }
+
   secondsSinceInteraction = 0;
-  hideMessage();
 
   //pass on to group CC
   customCC(e);
