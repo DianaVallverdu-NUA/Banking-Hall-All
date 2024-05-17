@@ -4,8 +4,6 @@ const div = document.getElementById("infoDiv");
 function displayMessage() {
   div.classList.remove("dissolve-out");
   div.classList.add("dissolve-in");
-
-  setTimeout(() => hideMessage(), 15000);
 }
 
 function hideMessage() {
