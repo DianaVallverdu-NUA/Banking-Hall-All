@@ -96,7 +96,6 @@ button {
 
 button:hover {
   background-color: #ff007f;
-  color: black;
 }
 
 @keyframes dissolveIn {
@@ -131,19 +130,26 @@ button:hover {
   animation-fill-mode: forwards;
 }
 
-.arrow {
-  filter: invert(19%) sepia(85%) saturate(6806%) hue-rotate(321deg) brightness(96%) contrast(113%);
-
+.arrowButton {
   position: absolute;
-  z-index: 2;
-
   top: 45vh;
+  z-index: 2;
 }
 
-#forwardArrow {
+.arrowButton:hover .arrow {
+  filter: invert(12%) sepia(79%) saturate(5112%) hue-rotate(243deg)
+    brightness(109%) contrast(137%);
+}
+
+.arrow {
+  filter: invert(19%) sepia(85%) saturate(6806%) hue-rotate(321deg)
+    brightness(96%) contrast(113%);
+}
+
+#forwardArrowButton {
   left: 96vw;
 }
 
-#backArrow {
+#backArrowButton {
   left: 2vw;
 }
