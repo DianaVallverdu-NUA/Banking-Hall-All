@@ -1,5 +1,7 @@
+let group = 'c';
+
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(innerWidth,innerHeight);
   setupController();
   setupIris();
   setupSphere();

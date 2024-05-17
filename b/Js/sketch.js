@@ -1,3 +1,5 @@
+let group = 'b';
+
 //////////////////////////
 /* EDIT VALUES BELOW TO MATCH DEVICE SLIDERS*/
 const CCSLIDER1 = 2;

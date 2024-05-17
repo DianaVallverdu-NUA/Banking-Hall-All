@@ -1,3 +1,5 @@
+let group = 'a';
+
 // PROJECTOR
 
 // IMAGE > ASPECT > V-ZOOM

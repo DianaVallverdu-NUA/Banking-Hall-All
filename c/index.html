@@ -2,27 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Eyeball Generative Art</title>
 
-    <link rel="stylesheet" type="text/css" href="style.css">
-
     <script src="../libs/p5.min.js"></script>
-    <script  src="../libs/webmidi.iife.min.js"></script>
+    <script src="../libs/webmidi.iife.min.js"></script>
     <!-- <script src="libraries/p5.sound.min.js"></script> -->
+    <script src="../shared/messaging.js" defer></script>
+    <style href="../shared/styles.css"></style>
+
+    <script src="../shared/midi.js" defer></script>
+    <script src="controller.js" defer></script>
+    <script src="iris.js" defer></script>
+    <script src="particle.js" defer></script>
+    <script src="sphere.js" defer></script>
+    <script src="sketch.js" defer></script>
+
+    <link href="../shared/styles.css" rel="stylesheet" type="text/css"/>
+
   </head>
 
   <body>
-   
-    <script src="../shared/midi.js"></script>
-    <script src="controller.js"></script>
-    <script src="iris.js"></script>
-    <script src="particle.js"></script>
-    <script src="sphere.js"></script>
-    <script src="sketch.js"></script>
-   
-    
+    <div id="shape-title">The Iris</div>
+    <div className="info" id="infoDiv">
+      <p>You are seeing group's X work, click to see another group's work:</p>
 
+      <button>Group A</button>
+      <button>Group B</button>
+      <button>Group C</button>
+    </div>
   </body>
 </html>

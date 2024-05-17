@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Generic MIDI</title>
+    <link href="../shared/styles.css" rel="stylesheet" type="text/css"/>
     <script src="../libs/webmidi.iife.min.js"></script>
     <script src="../libs/p5.min.js"></script>
     <script src="../shared/midi.js"></script>
     <script src="js/sketch.js"></script>
-    <style>
-        *{
-            margin: 0;
-        }
-        body {
-            overflow: hidden;
-            background-color: black;
-        }
-    </style>
-</head>
+    <script src="../shared/messaging.js" defer></script>
+  </head>
 
-<body>
+  <body>
+    <div id="shape-title">Rings of Creation</div>
 
-</body>
+    <div id="infoDiv">
+      <p>You are seeing group's X work, click to see another group's work:</p>
 
+      <button>Group A</button>
+      <button>Group B</button>
+      <button>Group C</button>
+    </div>
+  </body>
 </html>

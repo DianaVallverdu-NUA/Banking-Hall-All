@@ -1,12 +1,17 @@
+let secondsSinceInteraction = 0;
+
 function setupController() {
   WebMidi.enable()
     .then(onEnabled)
     .catch((err) => alert(err));
+
+  setInterval(intervalFunction, 1000);
 }
 
 // gets called when a MIDI control change message is intercepted
 function allCC(e) {
-  console.log("message received");
+  secondsSinceInteraction = 0;
+  hideMessage();
 
   //pass on to group CC
   customCC(e);
