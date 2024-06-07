@@ -11,7 +11,6 @@ function setupController() {
 
 // gets called when a MIDI control change message is intercepted
 function allCC(e) {
-
   //if first message is showing -> hide
   if (first) {
     hideMessage();
@@ -26,6 +25,10 @@ function allCC(e) {
   //reset values
   first = false;
   secondsSinceInteraction = 0;
+
+  //check if track changing
+  if (e.controller.number === 61 && e.data[2] === 0) nextPage();
+  if (e.controller.number === 60 && e.data[2] === 0) previousPage();
 
   //pass on to group CC
   customCC(e);

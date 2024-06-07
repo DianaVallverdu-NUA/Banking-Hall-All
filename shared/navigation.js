@@ -23,7 +23,23 @@ function getInitialIndex() {
   }
 }
 
-forwardArrow.onclick = () => {
+const previousPage = () => {
+  //update page index
+  pageIndex--;
+  if (pageIndex < 0) pageIndex = pages.length - 1;
+
+  //get current page
+  const currentPage = window.location.href;
+
+  //update page value
+  const newPage =
+    currentPage.substring(0, currentPage.length - 2) + pages[pageIndex] + "/";
+
+  //navigate
+  window.location.href = newPage;
+};
+
+const nextPage = () => {
   //update page index
   pageIndex++;
   if (pageIndex >= pages.length) pageIndex = 0;
@@ -39,20 +55,8 @@ forwardArrow.onclick = () => {
   window.location.href = newPage;
 };
 
-backArrow.onclick = () => {
-  //update page index
-  pageIndex--;
-  if (pageIndex < 0) pageIndex = pages.length - 1;
+backArrow.onclick = previousPage;
 
-  //get current page
-  const currentPage = window.location.href;
-
-  //update page value
-  const newPage =
-    currentPage.substring(0, currentPage.length - 2) + pages[pageIndex] + "/";
-
-  //navigate
-  window.location.href = newPage;
-};
+forwardArrow.onclick = nextPage;
 
 getInitialIndex();
