@@ -1,4 +1,4 @@
-const secondsToDisplayMessage = 20;
+const secondsToDisplayMessage = 10;
 const div = document.getElementById("infoDiv");
 
 function displayMessage() {
