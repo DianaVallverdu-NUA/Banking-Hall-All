@@ -1,5 +1,3 @@
-const forwardArrow = document.getElementById("forwardArrowButton");
-const backArrow = document.getElementById("backArrowButton");
 const pages = ["a", "b", "c"];
 let pageIndex;
 
@@ -54,9 +52,5 @@ const nextPage = () => {
   //navigate
   window.location.href = newPage;
 };
-
-backArrow.onclick = previousPage;
-
-forwardArrow.onclick = nextPage;
 
 getInitialIndex();

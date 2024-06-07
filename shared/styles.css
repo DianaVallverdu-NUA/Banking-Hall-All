@@ -129,27 +129,3 @@ button:hover {
   animation-duration: 1s;
   animation-fill-mode: forwards;
 }
-
-.arrowButton {
-  position: absolute;
-  top: 45vh;
-  z-index: 2;
-}
-
-.arrowButton:hover .arrow {
-  filter: invert(12%) sepia(79%) saturate(5112%) hue-rotate(243deg)
-    brightness(109%) contrast(137%);
-}
-
-.arrow {
-  filter: invert(19%) sepia(85%) saturate(6806%) hue-rotate(321deg)
-    brightness(96%) contrast(113%);
-}
-
-#forwardArrowButton {
-  left: 93vw;
-}
-
-#backArrowButton {
-  left: 2vw;
-}
