@@ -14,6 +14,7 @@ function allCC(e) {
   //if first message is showing -> hide
   if (first) {
     hideMessage();
+    playAudio();
   }
 
   //if not first -> check if need to show message
