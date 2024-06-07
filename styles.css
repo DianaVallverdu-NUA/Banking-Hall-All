@@ -1,0 +1,42 @@
+@font-face {
+  font-family: "killerBoots";
+  src: url(./shared/fonts/killer_boots/KILLERBOOTS.TTF);
+}
+
+#titleContainer {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+
+  /* font slightly bigger */
+  font-size: 4rem;
+  font-family: "killerBoots";
+  color: #ff007f;
+
+  /* display flex and aligned */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#playIcon {
+  filter: brightness(0) saturate(100%) invert(20%) sepia(84%) saturate(7336%) hue-rotate(324deg) brightness(104%) contrast(108%);
+
+  width: 80px;
+  margin-top: 40px;
+  border-radius: 50px;
+  box-shadow: 5px 5px 5px #ff007f;
+}
+
+#playIcon:hover {
+  filter: brightness(0) saturate(100%) invert(74%) sepia(71%) saturate(632%) hue-rotate(27deg) brightness(107%) contrast(102%);
+
+  box-shadow: 5px 5px 5px #ff007f;
+  cursor: pointer;
+}
+
+#playIcon:active {
+  transform: translateY(4px);
+  box-shadow: 2px 2px 2px #ff007f;
+}
