@@ -53,4 +53,16 @@ const nextPage = () => {
   window.location.href = newPage;
 };
 
+const checkRefreshed = () => {
+  //check for Navigation Timing API support
+  if (window.performance) {
+    console.info("window.performance works fine on this browser");
+  }
+  console.info(performance.navigation.type);
+  if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+    window.location.href = 'http://127.0.0.1:5500/';
+  }
+};
+
 getInitialIndex();
+checkRefreshed();
