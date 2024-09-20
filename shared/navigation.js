@@ -60,7 +60,9 @@ const checkRefreshed = () => {
   }
   console.info(performance.navigation.type);
   if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
-    window.location.href = 'http://127.0.0.1:5500/';
+    const href = window.location.href;
+    const mainPage = href.substring(0, href.length - 2);
+    window.location.href = mainPage;
   }
 };
 
