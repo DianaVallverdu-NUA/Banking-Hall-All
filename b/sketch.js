@@ -19,7 +19,6 @@ let maxColour;
 // 'cold' colour
 let minColour;
 //store whether it is the first iteration
-let firstIteration = true;
 let baseSize = 50;
 let extraSize = 200;
 let rangeStart = 0;
@@ -30,11 +29,20 @@ let textVisible = true;
 let sliderX = 0
 let sliderY = 0
 
+let emitter;
+// a square image with transparent background, 32px by 32px so runs smoothly
+let img;
+
 function preload() {
   table = loadTable("data/installs.csv", "csv", "header");
+  img = loadImage("texture32.png");
 }
 function setup() {
   createCanvas(innerWidth * CANVAS_RATIO, innerHeight * CANVAS_RATIO);
+
+  // doesn't need let as the global variable has already been defined
+  emitter = new Emitter(200, 200);
+
   // get names of months
   monthlyNames = table.columns;
   // get rid of first value (unused)
@@ -59,8 +67,8 @@ function setup() {
   //colours for buttons
   limeColour = color(6, 112, 29, 200);
   lemonColour = color(219, 255, 59, 200);
-  whiteColour= color(235, 235, 235, 200);
-  blackColour= color(78, 79, 78, 200);
+  whiteColour = color(235, 235, 235, 200);
+  blackColour = color(78, 79, 78, 200);
 
   textAlign(CENTER, CENTER);
   noStroke();
@@ -74,16 +82,32 @@ function setup() {
   for (let i = 0; i < monthlyValues.length; i++) {
     d = baseSize + map(monthlyValues[i], minValue, maxValue, 0, extraSize);
     let r = d / 2 + d / 6;
-    x = random(r,width-r);
-    y = random(r,height-r);
+    x = random(r, width - r);
+    y = random(r, height - r);
     positions.push({ x: x, y: y });
   }
   pendingEnd = rangeEnd = monthlyValues.length;
-  
+
 }
 
 function draw() {
   background(bg, 10);
+
+  // clears out the particles that were there on previous frames rather than leaving a path of colour
+  clear();
+  // adds the colours on top of each other to get a brighter centre
+  blendMode(ADD);
+
+  // emits 2 particles per frame from the centre point, increasing this increases the brightness and density of the orb
+  emitter.emit(2);
+  emitter.show();
+  emitter.update();
+
+  blendMode(BLEND);
+
+  // draw header
+  textSize(36);
+  fill(255);
   // declare temporary variables
   let x, y, d;
   // size values
@@ -94,16 +118,16 @@ function draw() {
   rangeEnd = pendingEnd;
 
   let randomRange = 0
-  let noiseRange =50
-  let noiseAmount= 1
+  let noiseRange = 50
+  let noiseAmount = 1
 
   for (let i = rangeStart; i < rangeEnd; i++) {
     // calculate size
     d = baseSize + map(monthlyValues[i], minValue, maxValue, 0, extraSize);
     let r = d / 2;
-    let noiseX = noise(positions[i].x *noiseAmount);
+    let noiseX = noise(positions[i].x * noiseAmount);
     let noiseY = noise(positions[i].y * noiseAmount);
-    
+
     x = positions[i].x + map(noiseX, 0, 1, -noiseRange, noiseRange);
     y = positions[i].y + map(noiseY, 0, 1, -noiseRange, noiseRange);
 
@@ -112,8 +136,8 @@ function draw() {
     //   y = random(r,height-r);
     // }
 
-    positions[i].x += 0.01 -random(0, 0.05);
-    positions[i].y += 0.01 -random(0, 0.05);
+    positions[i].x += 0.01 - random(0, 0.05);
+    positions[i].y += 0.01 - random(0, 0.05);
 
     // positions[i].x=x
     // positions[i].y=y
@@ -126,7 +150,7 @@ function draw() {
     // calculates circle size
     let finalRadius = d + mouseRadius;
     //
-    
+
 
     delta = map(monthlyValues[i], minValue, maxValue, 0, 1);
     noStroke();
@@ -140,10 +164,6 @@ function draw() {
       text(monthlyNames[i], x, y);
     }
   }
-
-  // draw header
-  textSize(36);
-  fill(255);
 }
 
 let bg = 0;
@@ -161,12 +181,12 @@ function customCC(e) {
       break;
     }
     case 33: {
-    // let controlX = e.value * x;
-    // let controlY = e.value * y;
-    // let controlDistance = dist(x, y, controlX, controlY);
-    // let controlRadius = map(controlDistance, 0, width, 100, 10); //100 is closest, 10 is furthest
-    // let finalRadius = d + controlRadius;
-    // circle(x, y, finalRadius);
+      // let controlX = e.value * x;
+      // let controlY = e.value * y;
+      // let controlDistance = dist(x, y, controlX, controlY);
+      // let controlRadius = map(controlDistance, 0, width, 100, 10); //100 is closest, 10 is furthest
+      // let finalRadius = d + controlRadius;
+      // circle(x, y, finalRadius);
       break;
     }
     case 34: {
@@ -215,11 +235,11 @@ function customNotes(e) {
   switch (e.data[1]) {
     case 40: {
       if (e.value) {
-        minColour= limeColour
+        minColour = limeColour
         maxColour = lemonColour
         // map(e.value, 0,1,0, fill(lerpColor(limeColour, lemonColour, alpha)));
       } else {
-        
+
         // fill(lerpColor(minColour, maxColour, .5));
       }
       break;
@@ -231,7 +251,7 @@ function customNotes(e) {
       }
 
     }
-    break;
+      break;
     case 42: {
       if (e.value) {
         minColour = color(14, 59, 237, 200);
@@ -242,8 +262,8 @@ function customNotes(e) {
     }
     case 43: {
       if (e.value) {
-        minColour=whiteColour
-        maxColour=blackColour
+        minColour = whiteColour
+        maxColour = blackColour
       } else {
       }
       break;
