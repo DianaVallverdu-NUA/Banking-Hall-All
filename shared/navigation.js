@@ -1,4 +1,5 @@
-const pages = ["a", "b", "c"];
+const CANVAS_RATIO = 0.9;
+const pages = ["a", "b"];
 let pageIndex;
 
 function getInitialIndex() {
