@@ -19,9 +19,7 @@ let maxColour;
 // 'cold' colour
 let minColour;
 //store whether it is the first iteration
-let first = true;
-const HEADERTEXT = "UK Solar Power Installations by Megawatt";
-const TOPMARGIN = 52;
+let firstIteration = true;
 let baseSize = 50;
 let extraSize = 200;
 let rangeStart = 0;
@@ -77,7 +75,7 @@ function setup() {
     d = baseSize + map(monthlyValues[i], minValue, maxValue, 0, extraSize);
     let r = d / 2 + d / 6;
     x = random(r,width-r);
-    y = random(TOPMARGIN + r,height-r);
+    y = random(r,height-r);
     positions.push({ x: x, y: y });
   }
   pendingEnd = rangeEnd = monthlyValues.length;
@@ -146,7 +144,6 @@ function draw() {
   // draw header
   textSize(36);
   fill(255);
-  text(HEADERTEXT, width / 2, TOPMARGIN / 2);
 }
 
 let bg = 0;
@@ -155,7 +152,7 @@ let bg = 0;
  * React to inputs from the control change sliders in the Midi controller
  * @param {Event} e
  */
-function allCC(e) {
+function customCC(e) {
   // console.log("controller:", e.controller.number, "value:", e.value);
   switch (e.controller.number) {
     case 32: {
@@ -213,7 +210,7 @@ function allCC(e) {
  * React to inputs from the bottom buttons on the controller
  * @param {Event} e
  */
-function allNoteOn(e) {
+function customNotes(e) {
   console.log("controller:", e.data[1], "value:", e.value);
   switch (e.data[1]) {
     case 40: {

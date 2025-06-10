@@ -11,6 +11,35 @@ function setupController() {
 
 // gets called when a MIDI control change message is intercepted
 function allCC(e) {
+  //check if track changing
+  if (e.controller.number === 35) {
+    console.log(e.data[2]);
+    if (e.data[2] >= 127 * 0.5) showB();
+    if (e.data[2] < 127 * 0.5) showA();
+    return;
+  }
+
+  //if first message is showing -> hide
+  if (first) {
+    hideMessage();
+    playAudio();
+  }
+
+  //if not first -> check if need to show message
+  if (!first && secondsSinceInteraction >= secondsToDisplayMessage) {
+    displayMessage();
+    setTimeout(() => hideMessage(), 15000);
+  }
+
+  //reset values
+  first = false;
+  secondsSinceInteraction = 0;
+
+  //pass on to group CC
+  customCC(e);
+}
+
+function allNoteOn(e) {
   //if first message is showing -> hide
   if (first) {
     hideMessage();
@@ -28,11 +57,11 @@ function allCC(e) {
   secondsSinceInteraction = 0;
 
   //check if track changing
-  if (e.controller.number === 61 && e.data[2] === 0) nextPage();
-  if (e.controller.number === 60 && e.data[2] === 0) previousPage();
+  // if (e.controller.number === 61 && e.data[2] === 0) nextPage();
+  // if (e.controller.number === 60 && e.data[2] === 0) previousPage();
 
   //pass on to group CC
-  customCC(e);
+  customNotes(e);
 }
 
 // ===================================
@@ -47,4 +76,7 @@ function onEnabled() {
   }
   myController = WebMidi.inputs[0];
   myController.channels[1].addListener("controlchange", allCC);
+
+  // read note messages
+  myController.channels[1].addListener("noteon", allNoteOn);
 }

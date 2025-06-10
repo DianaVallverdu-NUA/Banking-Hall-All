@@ -1,5 +1,6 @@
-const CANVAS_RATIO = 0.9;
+const CANVAS_RATIO = 1;
 const pages = ["a", "b"];
+
 let pageIndex;
 
 function getInitialIndex() {
@@ -52,6 +53,46 @@ const nextPage = () => {
 
   //navigate
   window.location.href = newPage;
+};
+
+const showA = () => {
+  const currentURL = window.location.href;
+  const localhostURL = currentURL.substring(0, currentURL.length - 2);
+
+  const currentPage = currentURL.substring(currentURL.length - 2, currentURL.length - 1);
+  if(currentPage === 'a') return;
+
+  //update page value
+  const newPage = localhostURL + "a" + "/";
+
+  console.log(localhostURL);
+  // return;
+
+  //navigate
+  window.location.href = newPage;
+
+  // update current page
+  currentPage = pageA;
+};
+
+const showB = () => {
+  const currentURL = window.location.href;
+  const localhostURL = currentURL.substring(0, currentURL.length - 2);
+
+  console.log(localhostURL);
+  // return;
+
+  //update page value
+  const newPage = localhostURL + "b" + "/";
+
+  const currentPage = currentURL.substring(currentURL.length - 2, currentURL.length - 1);
+  if(currentPage === 'b') return;
+
+  //navigate
+  window.location.href = newPage;
+
+  // update current page
+  currentPage = pageB;
 };
 
 const checkRefreshed = () => {

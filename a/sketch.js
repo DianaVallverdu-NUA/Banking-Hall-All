@@ -4,10 +4,8 @@ data is taken from https://www.eea.europa.eu/en/datahub/featured-data/statistica
 */
 
 //header text
-const HEADERTEXT = "EU Drought Data per Country";
 
 //margin at bottom of canvas
-const TOPMARGIN = 52;
 
 // optional parameter to get data from just one country
 //let geoCode = "FR";
@@ -129,7 +127,6 @@ function draw() {
   textSize(36);
   fill(255);
   noStroke();
-  text(HEADERTEXT, width / 2, TOPMARGIN / 2);
   fill(0);
 
 
@@ -140,7 +137,7 @@ function draw() {
  * React to inputs from the control change sliders in the Midi controller
  * @param {Event} e 
  */
-function allCC(e) {
+function customCC(e) {
   console.log('controller:', e.controller.number, 'value:', e.value);
   switch (e.controller.number) {
     case 32: {
@@ -187,8 +184,8 @@ function allCC(e) {
  * React to inputs from the bottom buttons on the controller
  * @param {Event} e 
  */
-function allNoteOn(e) {
-  console.log('controller:', e.data[1], 'value:', e.value);
+function customNotes(e) {
+  // console.log('controller:', e.data[1], 'value:', e.value);
   switch (e.data[1]) {
     case 40: {
       if (e.value) {
