@@ -3,21 +3,25 @@ This template visualises Drought Impact per square meter in European Union Count
 data is taken from https://www.eea.europa.eu/en/datahub/featured-data/statistical-data/datahubitem-view/c7c868d8-95dc-4f23-9dde-4cdc2738cc4d
 */
 
-//header text
-
-//margin at bottom of canvas
 
 // optional parameter to get data from just one country
 //let geoCode = "FR";
 // parameter to get data from just one year
 let year = 2022;
 
+//margin at bottom of canvas
+const BOTTOMMARGIN = 52;
+
+let textVisible = true
+
 // This vector is used to display the countries drought areas on the screen. It can be filled in different functions - for ex. getAreasForYear - as well as manually. Objects within the vector should be of type {country : String, area: Number, centre : {x: Number, y: Number}}
 let droughtsToDisplay = [];
 
 let finalDrought = [];
 
-let transitionTime = 5;
+let circleSpeed = -1;
+
+let backAlpha = 255;
 
 let centres = [];
 
@@ -27,8 +31,7 @@ let maximumDroughtArea = 0;
 // variables for editing colour with sliders
 let r = 255, g = 255, b = 255, a = 200;
 
-let frameRateAmount = 60;
-
+let numberOfPoints = 5;
 
 
 function setup() {
@@ -36,7 +39,7 @@ function setup() {
   maximumDroughtArea = calculateMaximumArea();
 
   // create canvas of maximum width and height
-  createCanvas(windowWidth * CANVAS_RATIO, windowHeight * CANVAS_RATIO);
+  createCanvas(windowWidth, windowHeight);
 
   // set stroke to null
   noStroke();
@@ -60,7 +63,7 @@ function setup() {
 
 function draw() {
   // set background to black
-  background(0);
+  background(0, backAlpha);
 
   // update droughtsToDisplay list to those of the currently displayed year
   // droughtsToDisplay = getAreasForYear(year);
@@ -72,7 +75,6 @@ function draw() {
   // loop through droughtsToDisplay and display circle with area & position given
   for (index in droughtsToDisplay) {
 
-
     if (droughtsToDisplay[index].area < finalDrought[index].area) {
       droughtsToDisplay[index].area = droughtsToDisplay[index].area + 100;
     }
@@ -80,8 +82,6 @@ function draw() {
     if (droughtsToDisplay[index].area > finalDrought[index].area) {
       droughtsToDisplay[index].area = droughtsToDisplay[index].area - 100;
     }
-
-
 
     // get info stored in the current index of the array
     const display = droughtsToDisplay[index];
@@ -99,26 +99,30 @@ function draw() {
     // draw circle at (x, y) with proportional area depending on maximumDroughtArea and windowHeight
     if (diameter > 0) {
       diameter += 20
-      circle (centre.x, centre.y, diameter);
-          // set fill to white for country name
-    fill(255);
-    stroke(0);
-    strokeWeight(2);
+      // circle (centre.x, centre.y, diameter);
 
-    // draw country name at centre of area
-    text(display.country, centre.x, centre.y);
+      polygon(centre.x, centre.y, diameter / 2, numberOfPoints);
+
+      // set fill to white for country name
+      fill(255);
+
+      // draw country name at centre of area
+      if (textVisible)
+        text(display.country, centre.x, centre.y);
     }
 
     centre.x += centre.vx
     centre.y += centre.vy
 
     if (centre.x > width || centre.x < 0) {
-      centre.vx *= -1;
+      centre.vx *= -1
     }
 
+
     if (centre.y > height || centre.y < 0) {
-      centre.vy *= -1;
+      centre.vy *= -1
     }
+
 
 
   }
@@ -126,56 +130,88 @@ function draw() {
   // draw title at end to prevent covering it
   textSize(36);
   fill(255);
-  noStroke();
-  fill(0);
+  stroke(0);
+  strokeWeight(2);
 
-
-  frameRate(frameRateAmount);
+  text(year, 75, height - BOTTOMMARGIN / 2);
 }
+
+function polygon(x, y, radius, npoints) {
+  let angle = TWO_PI / npoints;
+  beginShape();
+  for (let a = 0; a < TWO_PI; a += angle) {
+    let sx = x + cos(a) * radius;
+    let sy = y + sin(a) * radius;
+    vertex(sx, sy);
+  }
+  endShape(CLOSE);
+}
+
 
 /**
  * React to inputs from the control change sliders in the Midi controller
  * @param {Event} e 
  */
 function customCC(e) {
+  console.log('custom cc');
   console.log('controller:', e.controller.number, 'value:', e.value);
   switch (e.controller.number) {
-    case 32: {
+    case 13: {
       // knob 1
       year = floor(map(e.value, 0, 1, 2000, 2023));
       finalDrought = getAreasForYear(year);
       console.log(year);
       break;
     }
-    case 33: {
-      frameRateAmount = 60 * e.value;
+    case 14: {
+      numberOfPoints = map(e.value, 0, 1, 50, 5);
       break;
     }
-    case 34: {
+    case 15: {
+      circleSpeed = map(e.value, 0, 1, 2, 70);
+      for(let i = 0; i < centres.length; i++) {
+        let vector=createVector(centres[i].vx, centres[i].vy);
+        vector.normalize()
+        vector.mult(circleSpeed)
+
+        centres[i].vx = vector.x;
+        centres[i].vy = vector.y;
+
+        // Diana is the Queen of code!
+
+      }
       break;
     }
-    case 35: {
+    case 16: {
+      backAlpha = map(e.value, 0, 1, 255, 5);
       break;
     }
-    case 36: {
+    case 2: {
       // slider 1
       r = 255 * e.value;
       break;
     }
-    case 37: {
+    case 3: {
       // slider 2
       g = 255 * e.value;
       break;
     }
-    case 38: {
+    case 4: {
       // slider 3
       b = 255 * e.value;
       break;
     }
-    case 39: {
+    case 5: {
       // slider 4
       a = 200 * e.value;
       break;
+    }
+    case 46: {
+      if (e.value) {
+        textVisible = !textVisible;
+        // if value is 1 (button pressed)
+        // if value is 0 (button released)
+      }
     }
   }
 }
