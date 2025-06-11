@@ -173,14 +173,14 @@ let bg = 0;
  * @param {Event} e
  */
 function customCC(e) {
-  // console.log("controller:", e.controller.number, "value:", e.value);
+  console.log("controller:", e.controller.number, "value:", e.value);
   switch (e.controller.number) {
-    case 32: {
+    case 13: {
       // bg = e.value * 255;
       // background(bg);
       break;
     }
-    case 33: {
+    case 14: {
       // let controlX = e.value * x;
       // let controlY = e.value * y;
       // let controlDistance = dist(x, y, controlX, controlY);
@@ -189,19 +189,19 @@ function customCC(e) {
       // circle(x, y, finalRadius);
       break;
     }
-    case 34: {
+    case 15: {
       break;
     }
-    case 35: {
+    case 16: {
       break;
     }
-    case 36: {
+    case 2: {
       pendingStart = floor(
         map(e.value, 0, 1, 0, floor(monthlyValues.length / 2))
       );
       break;
     }
-    case 37: {
+    case 3: {
       pendingEnd = floor(
         map(
           e.value,
@@ -213,14 +213,51 @@ function customCC(e) {
       );
       break;
     }
-    case 38: {
+    case 4: {
       // slider 3 - X axis
       sliderX = e.value * width
       break;
     }
-    case 39: {
+    case 5: {
       // Slider 4 - Y axis
       sliderY = e.value * height
+      break;
+    }
+
+    // selects
+    case 46: {
+      if (e.value) {
+        minColour = limeColour
+        maxColour = lemonColour
+        // map(e.value, 0,1,0, fill(lerpColor(limeColour, lemonColour, alpha)));
+      } else {
+
+        // fill(lerpColor(minColour, maxColour, .5));
+      }
+      break;
+    }
+    case 47: {
+      if (e.value) {
+        //if value=1 button is pressed, value=0 button is released  
+        textVisible = !textVisible;
+      }
+
+    }
+      break;
+    case 48: {
+      if (e.value) {
+        minColour = color(14, 59, 237, 200);
+        maxColour = color(237, 14, 14, 200);
+      } else {
+      }
+      break;
+    }
+    case 49: {
+      if (e.value) {
+        minColour = whiteColour
+        maxColour = blackColour
+      } else {
+      }
       break;
     }
   }

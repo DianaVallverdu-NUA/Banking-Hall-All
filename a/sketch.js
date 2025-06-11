@@ -153,7 +153,6 @@ function polygon(x, y, radius, npoints) {
  * @param {Event} e 
  */
 function customCC(e) {
-  console.log('custom cc');
   console.log('controller:', e.controller.number, 'value:', e.value);
   switch (e.controller.number) {
     case 13: {
