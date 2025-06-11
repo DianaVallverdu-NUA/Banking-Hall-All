@@ -12,12 +12,15 @@ function setupController() {
 // gets called when a MIDI control change message is intercepted
 function allCC(e) {
   //check if track changing
-  if (e.controller.number === 35) {
-    console.log(e.data[2]);
-    if (e.data[2] >= 127 * 0.5) showB();
-    if (e.data[2] < 127 * 0.5) showA();
-    return;
-  }
+  // if (e.controller.number === 35) {
+  //   console.log(e.data[2]);
+  //   if (e.data[2] >= 127 * 0.5) showB();
+  //   if (e.data[2] < 127 * 0.5) showA();
+  //   return;
+  // }
+    //check if track changing
+    if (e.controller.number === 61 && e.data[2]) return nextPage();
+    if (e.controller.number === 60 && e.data[2]) return previousPage();  
 
   //if first message is showing -> hide
   if (first) {

@@ -1,42 +1,54 @@
-const CANVAS_RATIO = 1;
+const pages = ["a", "b"];
+let pageIndex;
 
-function getCurrentPage() {
-  const currentURL = window.location.href;
-  const currentPage = currentURL.substring(
-    currentURL.length - 2,
-    currentURL.length - 1
-  );
-  return currentPage;
+function getInitialIndex() {
+  const href = window.location.href;
+  const currentPage = href[href.length - 2];
+
+  switch (currentPage) {
+    case "a": {
+      pageIndex = 0;
+      return;
+    }
+    case "b": {
+      pageIndex = 1;
+      return;
+    }
+  }
 }
 
-function showPage(page) {
+const previousPage = () => {
+  //update page index
+  pageIndex--;
+  if (pageIndex < 0) pageIndex = pages.length - 1;
+
+  //get current page
+  const currentPage = window.location.href;
+
   //update page value
-  const currentURL = window.location.href;
-  const localhostURL = currentURL.substring(0, currentURL.length - 2);
-  const newPage = localhostURL + page + "/";
+  const newPage =
+    currentPage.substring(0, currentPage.length - 2) + pages[pageIndex] + "/";
 
   //navigate
   window.location.href = newPage;
-}
+};
 
-function showA() {
-  const currentPage = getCurrentPage();
-  if (currentPage === "a") return;
+const nextPage = () => {
+  //update page index
+  pageIndex++;
+  if (pageIndex >= pages.length) pageIndex = 0;
+
+  //get current page
+  const currentPage = window.location.href;
 
   //update page value
-  showPage("a");
-}
+  const newPage =
+    currentPage.substring(0, currentPage.length - 2) + pages[pageIndex] + "/";
 
-function showB() {
-  const currentPage = getCurrentPage();
-  if (currentPage === "b") return;
+  //navigate
+  window.location.href = newPage;
+};
 
-  showPage("b");
-}
-
-/**
- * If this page has been open from a refresh, go back to main index.html
- */
 const checkRefreshed = () => {
   //check for Navigation Timing API support
   if (window.performance) {
@@ -50,4 +62,5 @@ const checkRefreshed = () => {
   }
 };
 
+getInitialIndex();
 checkRefreshed();

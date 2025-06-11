@@ -38,7 +38,7 @@ function preload() {
   img = loadImage("texture32.png");
 }
 function setup() {
-  createCanvas(innerWidth * CANVAS_RATIO, innerHeight * CANVAS_RATIO);
+  createCanvas(innerWidth, innerHeight);
 
   // doesn't need let as the global variable has already been defined
   emitter = new Emitter(200, 200);
