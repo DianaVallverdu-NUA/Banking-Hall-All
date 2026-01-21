@@ -1,250 +1,131 @@
-/*
-This template visualises Drought Impact per square meter in European Union Countries
-data is taken from https://www.eea.europa.eu/en/datahub/featured-data/statistical-data/datahubitem-view/c7c868d8-95dc-4f23-9dde-4cdc2738cc4d
-*/
+//////////////////////////
+/* EDIT VALUES BELOW TO MATCH DEVICE SLIDERS*/
+const CCSLIDER1 = 36;
+const CCSLIDER2 = 37;
+const CCSLIDER3 = 38;
+const CCSLIDER4 = 39;
+const CCKNOB1 = 32;
+const CCKNOB2 = 33;
+const CCKNOB3 = 34;
+const CCKNOB4 = 35;
+let myController;
 
 
-// optional parameter to get data from just one country
-//let geoCode = "FR";
-// parameter to get data from just one year
-let year = 2022;
+///////////////////////////
+// variables that correspond to MIDI controller values 
+let r1 = 180;
+let r2 = 180;
+let a1 = 0;
+let a2 = 0;
 
-//margin at bottom of canvas
-const BOTTOMMARGIN = 52;
+let a1Inc = 2.5;
+let a2Inc = 2.5;
 
-let textVisible = true
+let prevX;
+let prevY;
 
-// This vector is used to display the countries drought areas on the screen. It can be filled in different functions - for ex. getAreasForYear - as well as manually. Objects within the vector should be of type {country : String, area: Number, centre : {x: Number, y: Number}}
-let droughtsToDisplay = [];
-
-let finalDrought = [];
-
-let circleSpeed = -1;
-
-let backAlpha = 255;
-
-let centres = [];
-
-//maximum area stored within spreadsheet data
-let maximumDroughtArea = 0;
-
-// variables for editing colour with sliders
-let r = 255, g = 255, b = 255, a = 200;
-
-let numberOfPoints = 5;
+let strokeW = 3.5;
+let max = 5;
+let r = 255;
+let g = 255;
+let b = 255;
+let a;
 
 
+//////////////////////////
+// built in P5 function gets called at the beginning
 function setup() {
-  //calculate the maximum area and store in maximumDroughtArea variable
-  maximumDroughtArea = calculateMaximumArea();
+    createCanvas(innerWidth, innerHeight);
+    background(0);
+    angleMode(DEGREES);
 
-  // create canvas of maximum width and height
-  createCanvas(windowWidth, windowHeight);
+    WebMidi
+        .enable()
+        .then(onEnabled)
+        .catch(err => alert(err));
 
-  // set stroke to null
-  noStroke();
 
-  // set text align to centre
-  textAlign(CENTER, CENTER);
-
-  //generate droughts & centres for first time
-  droughtsToDisplay = getAreasForYear(year);
-  finalDrought = droughtsToDisplay;
-  centres = recalculateCentres();
-
-  // setup midi
-  setupController();
-
-  // assigning values to speedX and speeedY
-  speedX = random(10);
-  speedY = random(10);
+    a1Inc = random(0.1, 5);
+    a2Inc = random(0.1, 5);
+}
+// gets called by MIDI library once MIDI enabled
+function onEnabled() {
+    // Display available MIDI input devices
+    if (WebMidi.inputs.length < 1) {
+        console.log("No device detected.");
+    } else {
+        WebMidi.inputs.forEach((device, index) => {
+            console.log(`${index}: ${device.name}`);
+        });
+    }
+    myController = WebMidi.inputs[0];
+    myController.channels[1].addListener("controlchange", allCC);
 
 }
-
-function draw() {
-  // set background to black
-  background(0, backAlpha);
-
-  // update droughtsToDisplay list to those of the currently displayed year
-  // droughtsToDisplay = getAreasForYear(year);
-
-  // set text size and text align for countries
-  textSize(12);
-
-  let index = 0;
-  // loop through droughtsToDisplay and display circle with area & position given
-  for (index in droughtsToDisplay) {
-
-    if (droughtsToDisplay[index].area < finalDrought[index].area) {
-      droughtsToDisplay[index].area = droughtsToDisplay[index].area + 100;
-    }
-
-    if (droughtsToDisplay[index].area > finalDrought[index].area) {
-      droughtsToDisplay[index].area = droughtsToDisplay[index].area - 100;
-    }
-
-    // get info stored in the current index of the array
-    const display = droughtsToDisplay[index];
-
-    // get centre position
-    const centre = centres[index];
-
-    // set fill of circles to brown with alpha 100 - to allow overlap
-    fill(r, g, b, a);
-    noStroke(0);
-
-    let diameter = (display.area / maximumDroughtArea) * windowHeight;
-    // let diameter = (display.area / maximumDroughtArea) * windowHeight
-
-    // draw circle at (x, y) with proportional area depending on maximumDroughtArea and windowHeight
-    if (diameter > 0) {
-      diameter += 20
-      // circle (centre.x, centre.y, diameter);
-
-      polygon(centre.x, centre.y, diameter / 2, numberOfPoints);
-
-      // set fill to white for country name
-      fill(255);
-
-      // draw country name at centre of area
-      if (textVisible)
-        text(display.country, centre.x, centre.y);
-    }
-
-    centre.x += centre.vx
-    centre.y += centre.vy
-
-    if (centre.x > width || centre.x < 0) {
-      centre.vx *= -1
-    }
-
-
-    if (centre.y > height || centre.y < 0) {
-      centre.vy *= -1
-    }
-
-
-
-  }
-
-  // draw title at end to prevent covering it
-  textSize(36);
-  fill(255);
-  stroke(0);
-  strokeWeight(2);
-
-  text(year, 75, height - BOTTOMMARGIN / 2);
-}
-
-function polygon(x, y, radius, npoints) {
-  let angle = TWO_PI / npoints;
-  beginShape();
-  for (let a = 0; a < TWO_PI; a += angle) {
-    let sx = x + cos(a) * radius;
-    let sy = y + sin(a) * radius;
-    vertex(sx, sy);
-  }
-  endShape(CLOSE);
-}
-
-
-/**
- * React to inputs from the control change sliders in the Midi controller
- * @param {Event} e 
- */
+// gets called when a MIDI control change message is intercepted
 function customCC(e) {
-  console.log('controller:', e.controller.number, 'value:', e.value);
-  switch (e.controller.number) {
-    case 13: {
-      // knob 1
-      year = floor(map(e.value, 0, 1, 2000, 2023));
-      finalDrought = getAreasForYear(year);
-      console.log(year);
-      break;
+    console.log("controller number = " + e.controller.number + ", value = " + e.data[2]);
+    let ratio = e.data[2] / 127
+    switch (e.controller.number) {
+        case CCSLIDER1:
+            console.log("Slider 1 moved to " + ratio);
+            r = 255 * ratio;
+            break;
+        case CCSLIDER2:
+            g = 255 * ratio;
+            break;
+        case CCSLIDER3:
+            b = 255 * ratio;
+            break;
+        case CCSLIDER4:
+            a = 255 * ratio;
+            break;
+        case CCKNOB1:
+            r1, r2 = 350 * ratio;
+            break;
+        case CCKNOB2:
+            a1Inc, a2Inc = 5 * ratio;
+        
+            break;
+        case CCKNOB3:
+            strokeW = 7 * ratio;
+            break;
+        case CCKNOB4:
+            max = 1 + 29 * ratio;
+            break;
     }
-    case 14: {
-      numberOfPoints = map(e.value, 0, 1, 50, 5);
-      break;
-    }
-    case 15: {
-      circleSpeed = map(e.value, 0, 1, 2, 70);
-      for(let i = 0; i < centres.length; i++) {
-        let vector=createVector(centres[i].vx, centres[i].vy);
-        vector.normalize()
-        vector.mult(circleSpeed)
 
-        centres[i].vx = vector.x;
-        centres[i].vy = vector.y;
-
-        // Diana is the Queen of code!
-
-      }
-      break;
-    }
-    case 16: {
-      backAlpha = map(e.value, 0, 1, 255, 5);
-      break;
-    }
-    case 2: {
-      // slider 1
-      r = 255 * e.value;
-      break;
-    }
-    case 3: {
-      // slider 2
-      g = 255 * e.value;
-      break;
-    }
-    case 4: {
-      // slider 3
-      b = 255 * e.value;
-      break;
-    }
-    case 5: {
-      // slider 4
-      a = 200 * e.value;
-      break;
-    }
-    case 46: {
-      if (e.value) {
-        textVisible = !textVisible;
-        // if value is 1 (button pressed)
-        // if value is 0 (button released)
-      }
-    }
-  }
 }
 
-/**
- * React to inputs from the bottom buttons on the controller
- * @param {Event} e 
- */
-function customNotes(e) {
-  // console.log('controller:', e.data[1], 'value:', e.value);
-  switch (e.data[1]) {
-    case 40: {
-      if (e.value) {
-      } else {
-      }
-      break;
+function customDraw() {
+    noFill();
+    drawSpiral();
+}
+
+function drawSpiral() {
+
+    translate(width / 2, height / 2);
+
+    for (let i = 0; i < max; i++) {
+        let x1 = r1 * cos(a1);
+        let y1 = r1 * sin(a1);
+
+        let x2 = x1 + r2 * cos(a2);
+        let y2 = y1 + r2 * sin(a2);
+
+        // let r = map(sin(frameCount), -1, 1, 100, 200);
+        // let g = map(cos(frameCount), -1, 1, 100, 200);
+        // let b = map(sin(frameCount), -1, 1, 200, 100);
+
+        stroke(r, g, b, a);
+        strokeWeight(strokeW);
+
+        line(prevX, prevY, x2, y2);
+
+        prevX = x2;
+        prevY = y2;
+
+        a1 += a1Inc;
+        a2 += a2Inc;
     }
-    case 41: {
-      if (e.value) {
-      } else {
-      }
-      break;
-    }
-    case 42: {
-      if (e.value) {
-      } else {
-      }
-      break;
-    }
-    case 43: {
-      if (e.value) {
-      } else {
-      }
-      break;
-    }
-  }
 }
