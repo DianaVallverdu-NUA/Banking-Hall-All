@@ -1,4 +1,6 @@
+const audioOFF = true;
 const playAudio = () => {
+  if(audioOFF) return;
   const href = window.location.href;
   const currentPage = href[href.length - 2];
 

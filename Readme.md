@@ -21,8 +21,9 @@ For each group:
   - rename draw to customDraw
 
 In General:
-1. Ensure pages vector only covers pages
-2. Adjust frame width using the customp5.js drawFrame function
-5. Turn messaging on and off by:
+1. Change main index.html title if desired
+2. Ensure pages vector only covers pages
+3. Adjust frame width using the customp5.js drawFrame function
+4. Turn messaging on and off by:
 - Uncommenting message.js import script from each index
 - toggling messagingON variable from messaging.js
