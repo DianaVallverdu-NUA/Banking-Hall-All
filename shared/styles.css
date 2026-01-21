@@ -21,8 +21,13 @@ body {
   color: #ff007f;
 }
 
+main {
+  width: 100vw;
+
+}
+
 canvas {
-  position: relative;
+  /* position: relative; */
 }
 
 /* top bar */

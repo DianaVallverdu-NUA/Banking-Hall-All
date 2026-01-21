@@ -19,4 +19,4 @@ For each group:
   - remove onEnabled function
   - rename allCC to customCC 
   - rename draw to customDraw
-4. Adjust frame using the customp5.js drawFrame function
+4. Adjust frame width using the customp5.js drawFrame function

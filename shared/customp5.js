@@ -1,10 +1,9 @@
 // draw a frame around sketch
 function drawFrame(w) {
-  translate(width / 2, height / 2);
   noStroke();
-  fill(0, 0, 0);
-  rect(-width / 2, -height / 2, w, height);
-  rect(width / 2 - w, -height / 2, w, height);
+  fill(100, 0, 0);
+  rect(0, 0, w, height);
+  rect(width - w, 0, w, height);
 }
 
 function draw() {
