@@ -19,6 +19,9 @@ const checkRefreshed = () => {
 };
 
 const goToPage = (letter) => {
+
+  console.log("go to page request", letter);
+
   if(!pages.includes(letter)) return;
   if(letter === getCurrentPage()) return;
   //get current page

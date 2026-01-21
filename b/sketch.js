@@ -90,7 +90,7 @@ function setup() {
 
 }
 
-function draw() {
+function customDraw() {
   background(bg, 10);
 
   // clears out the particles that were there on previous frames rather than leaving a path of colour

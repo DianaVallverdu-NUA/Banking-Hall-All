@@ -34,6 +34,7 @@ function allCC(e) {
 }
 
 function allNoteOn(e) {
+  console.log("all notes");
   //if first message is showing -> hide
   if (first) {
     hideMessage();
@@ -73,6 +74,7 @@ function allNoteOn(e) {
 // ===================================
 // gets called by MIDI library once MIDI enabled
 function onEnabled() {
+  console.log("on enabled called");
   // Display available MIDI input devices
   if (WebMidi.inputs.length < 1) {
   } else {

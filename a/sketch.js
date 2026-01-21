@@ -48,20 +48,7 @@ function setup() {
     a1Inc = random(0.1, 5);
     a2Inc = random(0.1, 5);
 }
-// gets called by MIDI library once MIDI enabled
-function onEnabled() {
-    // Display available MIDI input devices
-    if (WebMidi.inputs.length < 1) {
-        console.log("No device detected.");
-    } else {
-        WebMidi.inputs.forEach((device, index) => {
-            console.log(`${index}: ${device.name}`);
-        });
-    }
-    myController = WebMidi.inputs[0];
-    myController.channels[1].addListener("controlchange", allCC);
 
-}
 // gets called when a MIDI control change message is intercepted
 function customCC(e) {
     console.log("controller number = " + e.controller.number + ", value = " + e.data[2]);

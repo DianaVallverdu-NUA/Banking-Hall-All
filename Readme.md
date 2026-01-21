@@ -14,3 +14,8 @@ For each group:
 2. Index.html:
   - Change Title
   - Change draw to customDraw
+  - Add info in infoDiv
+3. on sketch.js:
+  - remove onEnabled function
+  - rename allCC to customCC 
+4. Adjust frame using the customp5.js drawFrame function
