@@ -1,4 +1,4 @@
-const pages = ["a", "b"];
+const pages = ["a"];
 
 function getCurrentPage() {
   const href = window.location.href;
