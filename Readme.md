@@ -18,4 +18,5 @@ For each group:
 3. on sketch.js:
   - remove onEnabled function
   - rename allCC to customCC 
+  - rename draw to customDraw
 4. Adjust frame using the customp5.js drawFrame function
