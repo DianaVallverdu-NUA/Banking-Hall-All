@@ -11,16 +11,7 @@ function setupController() {
 
 // gets called when a MIDI control change message is intercepted
 function allCC(e) {
-  //check if track changing
-  // if (e.controller.number === 35) {
-  //   console.log(e.data[2]);
-  //   if (e.data[2] >= 127 * 0.5) showB();
-  //   if (e.data[2] < 127 * 0.5) showA();
-  //   return;
-  // }
-    //check if track changing
-    if (e.controller.number === 61 && e.data[2]) return nextPage();
-    if (e.controller.number === 60 && e.data[2]) return previousPage();  
+  
 
   //if first message is showing -> hide
   if (first) {
@@ -59,12 +50,24 @@ function allNoteOn(e) {
   first = false;
   secondsSinceInteraction = 0;
 
-  //check if track changing
-  // if (e.controller.number === 61 && e.data[2] === 0) nextPage();
-  // if (e.controller.number === 60 && e.data[2] === 0) previousPage();
+  // notes going from 40 to 43
+  const note = e.data[1];
 
-  //pass on to group CC
-  customNotes(e);
+
+  // WARNING: remove unused pages!
+  switch(note) {
+    case 40 : 
+      return goToPage("a");
+
+    case 41 : 
+      return goToPage("b");
+
+    case 42 : 
+      return goToPage("c");
+
+    case 43 : 
+      return goToPage("d");
+  }
 }
 
 // ===================================
