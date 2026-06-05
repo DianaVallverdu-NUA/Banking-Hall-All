@@ -1,4 +1,4 @@
-const messagingOFF = true;
+const messagingOFF = false;
 const secondsToDisplayMessage = 16;
 const div = document.getElementById("infoDiv");
 

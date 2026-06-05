@@ -16,6 +16,7 @@ For each group:
   - Change / (un)Comment Title
   - Change / (un)Comment info in infoDiv
 3. on sketch.js:
+  - remove setup function (?)
   - remove onEnabled function
   - rename allCC to customCC
   - rename draw to customDraw
