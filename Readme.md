@@ -12,19 +12,18 @@ Remove any unused folders.
 For each group:
 
 1. Replace sketch.js with their group's sketch
-2. Index.html:
-  - Change / (un)Comment Title
-  - Change / (un)Comment info in infoDiv
-3. on sketch.js:
-  - remove setup function (?)
-  - remove onEnabled function
-  - rename allCC to customCC
-  - rename draw to customDraw
+2. `Index.html`:
+  - Change / (un)Comment `Title`
+  - Change / (un)Comment info in `infoDiv`
+3. on `sketch.js`:
+  - remove `onEnabled` function
+  - rename `allCC` to `customCC`
+  - rename `draw to `customDraw`
+  - keep `setup` as it is
 
 In General:
 1. Change main index.html title if desired
-2. Ensure pages vector only covers pages
-3. Adjust frame width using the customp5.js drawFrame function
+2. Ensure `pages` vector in `navigation.js` covers appropriate pages (a to ....)
+3. Adjust frame width using the`customp5.j` `drawFram`  function
 4. Turn messaging on and off by:
-- Uncommenting message.js import script from each index
-- toggling messagingON variable from messaging.js
+- toggling `messagingON` variable from`messaging.js`
